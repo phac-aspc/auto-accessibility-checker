@@ -1,7 +1,7 @@
 # Setup libraries
 import os
 import streamlit as st 
-from backend import get_chain, analyse
+from backend import get_chain, analyse, chunkify
 
 
 # Context
@@ -17,15 +17,16 @@ with st.sidebar:
         submit = st.form_submit_button("Analyse")
 
 if submit and code:
-    st.write("Analysing:")
-    st.write(f"```html\n{code}\n```")
-
-    # Get output
+    # Prep input
     chain = get_chain(key, model)
-    results = analyse(chain, code)
+    chunks = chunkify(code)
 
-    # Show summary results
-    st.write(f"\n**Here are the results**:\n{results.content}")
+    for c in chunks:
+        st.write("Analysing: ")
+        st.write(f"```\n{c.page_content}\n```")
+
+        results = analyse(chain, c.page_content)
+        st.write(f"\n**Here are the results**:\n{results.content}")
 
 # Error message
 elif submit and not code:

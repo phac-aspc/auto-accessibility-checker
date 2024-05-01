@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 
 from langchain_openai import ChatOpenAI
 from langchain.prompts import PromptTemplate
+from langchain_text_splitters import Language, RecursiveCharacterTextSplitter
 
 
 # Make sure you have a variable called OPENAI_API_KEY in your .env file
@@ -56,6 +57,16 @@ def get_chain(key : str = KEY, model : str = "gpt-3.5-turbo"):
                  api_key=key)
     chain = prompt | llm
     return chain
+
+def chunkify(code : str) -> list:
+    """ Splits the given file into smaller code snippets  """
+    
+    html_splitter = RecursiveCharacterTextSplitter.from_language(
+        language=Language.HTML, chunk_size=500, chunk_overlap=0
+    )
+    html_chunks = html_splitter.create_documents([code])
+
+    return html_chunks
 
 def analyse(chain, code : str) -> str:
     """ Analyses the given code snippet with the model chain """
