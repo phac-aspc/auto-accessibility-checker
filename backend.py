@@ -9,6 +9,7 @@ import os
 from dotenv import load_dotenv
 
 from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
 from langchain.prompts import PromptTemplate
 from langchain_text_splitters import Language, RecursiveCharacterTextSplitter
 
@@ -53,8 +54,10 @@ def get_chain(key : str = KEY, model : str = "gpt-3.5-turbo"):
 
 
     # load a model
-    llm = ChatOpenAI(model=model, temperature=0.7, max_tokens=512, 
-                 api_key=key)
+    if "claude" in model:
+        llm = ChatAnthropic(model=model, temperature=0.7, max_tokens=512, api_key=key)
+    else: 
+        llm = ChatOpenAI(model=model, temperature=0.7, max_tokens=512, api_key=key)
     chain = prompt | llm
     return chain
 

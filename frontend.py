@@ -11,8 +11,8 @@ st.write("Uses AI models to check obvious errors in the W3C-WAI accessibility st
 # Search inputs
 with st.sidebar:
     with st.form(key='user_input'):
-        key = st.text_input("OpenAI API Key", max_chars=60, placeholder="Enter an OpenAI API Key")
-        model = st.selectbox("Model", ["gpt-3.5-turbo", "gpt-4-turbo"], index=0)
+        key = st.text_input("Anthropic/Claude API Key", max_chars=110, placeholder="Enter an Anthropic/OpenAI API Key")
+        model = st.selectbox("Model", ["gpt-3.5-turbo", "gpt-4-turbo", "claude-3-haiku-20240307"], index=0)
         code = st.text_area("Code", placeholder="Paste your HTML code here")
         submit = st.form_submit_button("Analyse")
 

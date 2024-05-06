@@ -14,8 +14,9 @@ git clone https://github.com/phac-aspc/auto-accessibility-checker
 
 Then, install the dependencies by running
 ```bash
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
+(Use pip3 not pip)
 
 Finally, run the project by running
 ```bash
